@@ -35,7 +35,7 @@ The main design goal is to provide a lighweight and extensible solution that is 
 
 - Files are stored into a MinIO bucket.
 - A job is enqueued to extract and store the file's text content into a Postgres' [`tsvector`](https://www.postgresql.org/docs/current/datatype-textsearch.html#DATATYPE-TSVECTOR) column (GIN-indexed).
-- Full-text search is performed by combining and ranking the query results on the search vectors.
+- Full-text search is performed by combining and ranking the query results over the search vectors.
 
 **Note**: Redis is used as a dependency of BullMQ. Caching strategies could be implemented, but it's out of scope.
 
