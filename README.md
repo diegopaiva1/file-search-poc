@@ -60,7 +60,9 @@ This is a simple yet powerful approach, without requiring additional infrastruct
 docker-compose up --build
 ```
 
-2. Access the application:
+2. Rename the `.env.example` file to `.env` (or create a separate `.env` file)
+
+3. Access the application:
 
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:3001
