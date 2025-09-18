@@ -19,8 +19,6 @@ export class FilesService {
   constructor(
     @InjectRepository(File)
     private readonly fileRepository: Repository<File>,
-    @InjectRepository(FileProcessingJob)
-    private readonly jobRepository: Repository<FileProcessingJob>,
     @InjectQueue("file-processing")
     private readonly fileProcessingQueue: Queue,
     private readonly minioService: MinioService
