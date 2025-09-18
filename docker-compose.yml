@@ -1,0 +1,100 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: file-search-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - app-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: file-search-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+    volumes:
+      - minio_data:/data
+    ports:
+      - "${MINIO_API_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: file-search-redis
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: file-search-backend
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
+      MINIO_ENDPOINT: minio
+      MINIO_API_PORT: 9000
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      REACT_APP_HOST: ${REACT_APP_HOST}
+      REACT_APP_PORT: ${REACT_APP_PORT}
+      NODE_ENV: ${NODE_ENV}
+    ports:
+      - "${API_PORT}:3001"
+    depends_on:
+      - postgres
+      - minio
+      - redis
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: file-search-frontend
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+    ports:
+      - "${REACT_APP_PORT}:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  minio_data:
+  redis_data:
+
+networks:
+  app-network:
+    driver: bridge

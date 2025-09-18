@@ -1,0 +1,18 @@
+# ignore
+dist
+build
+node_modules
+.env
+*.log
+.DS_Store
+.vscode
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+coverage
+.idea
+*.iml
+*.swp
+*.swo
+*.bak
+*.tmp
