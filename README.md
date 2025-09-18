@@ -6,10 +6,7 @@ The main design goal is to provide a lighweight and extensible solution that is 
 
 ## Demo
 
-<video width="640" height="360" controls>
-  <source src="./assets/demo.mov" type="video/quicktime">
-  Your browser does not support the video tag.
-</video>
+https://github.com/user-attachments/assets/309bff4a-7a4f-4333-abdb-3e12af26c083
 
 ## Tech Stack
 
