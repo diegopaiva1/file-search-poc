@@ -56,7 +56,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
     <Box shadow="sm" overflow="hidden" w="full">
       <Box bg="gray.50" px={6} py={3} borderBottomWidth="1px">
         <Text fontSize="sm" color="gray.600">
-          Found {total} file{total !== 1 ? "s" : ""}
+          Found {total} file{total !== 1 ? "s" : ""} - Ranked by relevance
         </Text>
       </Box>
 
