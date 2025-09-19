@@ -28,7 +28,11 @@ https://github.com/user-attachments/assets/309bff4a-7a4f-4333-abdb-3e12af26c083
 - Reject the upload of files that already exist in the storage.
 - Search through all files and find relevant content quickly.
 
-## Implementation Details
+## High-level Design
+
+![High-level design](./assets/high-level-design.png)
+
+### Implementation Details
 
 - Files are stored into a MinIO bucket.
 - A job is enqueued to extract and store the file's text content into a Postgres' [`tsvector`](https://www.postgresql.org/docs/current/datatype-textsearch.html#DATATYPE-TSVECTOR) column (GIN-indexed).
@@ -37,10 +41,6 @@ https://github.com/user-attachments/assets/309bff4a-7a4f-4333-abdb-3e12af26c083
 **Note**: Redis is used as a dependency of BullMQ. Caching strategies could be implemented, but it's out of scope.
 
 This is a simple yet powerful approach, without requiring additional infrastructure like cloud storage or specialized search engines like Elasticsearch.
-
-## High-level Design
-
-![High-level design](./assets/high-level-design.png)
 
 ## Getting Started
 
@@ -56,7 +56,7 @@ This is a simple yet powerful approach, without requiring additional infrastruct
 2. Rename the `.env.example` file to `.env` (or create a separate `.env` file)
 
 3. Build and start the application
-   
+
 ```bash
 docker-compose up --build
 ```
