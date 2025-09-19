@@ -51,15 +51,17 @@ This is a simple yet powerful approach, without requiring additional infrastruct
 
 ### Quick Start
 
-1. Clone and start the application:
+1. Clone the application
 
+2. Rename the `.env.example` file to `.env` (or create a separate `.env` file)
+
+3. Build and start the application
+   
 ```bash
 docker-compose up --build
 ```
 
-2. Rename the `.env.example` file to `.env` (or create a separate `.env` file)
-
-3. Access the application:
+4. Access the application:
 
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:3001
